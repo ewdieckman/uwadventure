@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWAdventure.Core", "UWAdventure.Core\UWAdventure.Core.csproj", "{5F0E7D74-8873-4F08-8942-EDA8B5D8F7DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWAdventure.ConsoleApp", "UWAdventure.ConsoleApp\UWAdventure.ConsoleApp.csproj", "{0098A31A-40E5-47B3-B733-EBE446157576}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F0E7D74-8873-4F08-8942-EDA8B5D8F7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F0E7D74-8873-4F08-8942-EDA8B5D8F7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F0E7D74-8873-4F08-8942-EDA8B5D8F7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F0E7D74-8873-4F08-8942-EDA8B5D8F7DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0098A31A-40E5-47B3-B733-EBE446157576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0098A31A-40E5-47B3-B733-EBE446157576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0098A31A-40E5-47B3-B733-EBE446157576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0098A31A-40E5-47B3-B733-EBE446157576}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {013F8DF5-312C-40EB-82FA-FEFAE4B859D7}
+	EndGlobalSection
+EndGlobal
