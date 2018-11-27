@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.IO;
-using UWAdventure.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
 using UWAdventure.Entities.Persistence;
+using System.Data.SqlClient;
 
 namespace UWAdventure.ConsoleApp
 {
@@ -13,37 +13,10 @@ namespace UWAdventure.ConsoleApp
     {
         static void Main(string[] args)
         {
-
-            //setup configuration to mimic ASP.NET configuration
-            var builder = new ConfigurationBuilder()
-                 .SetBasePath(Directory.GetCurrentDirectory())
-                 .AddJsonFile("appsettings.json");
-            IConfiguration config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
-
-            //setup our DI
-            var serviceProvider = new ServiceCollection()
-                .AddScoped<IDbUWAdventure, DbUWAdventure>(
-                    provider => new DbUWAdventure(
-                        config
-                    ))
-
-                //register DAO objects
-
-                //register business services
-
-
-                .BuildServiceProvider();
-
             Console.WriteLine("Hello World!");
 
-            // IDbUWAdventure is located in UW.Adventure.Core.Data.DbConnection
-            // it is a little helper class that I use to programmatically grab the database connection string
-            // from appsettings.json.  This is handled automatically in ASP.NET Core
-            IDbUWAdventure objDB = serviceProvider.GetService<IDbUWAdventure>();
 
-            string connection_string = objDB.GetConnectionString("uwadventure-azure");
+            string connection_string = ConfigurationManager.ConnectionStrings["uwadventure-azure"].ConnectionString;
 
             // create an empty list that holds OrderDTO objects
             IList<OrderDTO> orders = new List<OrderDTO>();

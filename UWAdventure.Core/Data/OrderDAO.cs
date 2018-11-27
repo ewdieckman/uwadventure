@@ -5,11 +5,10 @@
     /// </summary>
     public class OrderDAO : IOrderDAO
     {
-        private readonly IDbUWAdventure _dbObj;
 
-        public OrderDAO(IDbUWAdventure dbObj)
+        public OrderDAO()
         {
-            _dbObj = dbObj;
+        
         }
 
 
