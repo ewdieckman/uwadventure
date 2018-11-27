@@ -5,6 +5,7 @@ using UWAdventure.Entities.Persistence;
 using UWAdventure.Enum;
 using UWAdventure.Events;
 using System.Collections.Generic;
+using UWAdventure.Entities.ViewModels;
 
 namespace UWAdventure.BLL
 {
@@ -102,6 +103,18 @@ namespace UWAdventure.BLL
             return OrderStatus.Pending;
         }
 
+        /// <summary>
+        /// Returns a view model with all order details
+        /// </summary>
+        public OrderViewModel GetOrderDetails(int order_number)
+        {
+            return _orderDAO.GetOrderDetails(order_number);
+        }
+
+        public IList<OrderViewModel> GetOrderDetails(DateTime start_date, DateTime end_date)
+        {
+            return _orderDAO.GetOrderDetails(start_date,end_date);
+        }
 
         ///// <summary>
         ///// Ships the specified order

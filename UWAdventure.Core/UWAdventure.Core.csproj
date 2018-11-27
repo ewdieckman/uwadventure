@@ -49,7 +49,6 @@
     <Compile Include="BLL\InventoryService.cs" />
     <Compile Include="BLL\OrderService.cs" />
     <Compile Include="BLL\ProductService.cs" />
-    <Compile Include="Data\Interfaces\IOrderDAO.cs" />
     <Compile Include="Data\OrderDAO.cs" />
     <Compile Include="Data\OrderItemDAO.cs" />
     <Compile Include="Data\ProductDAO.cs" />
@@ -61,6 +60,12 @@
     <Compile Include="Entities\Persistence\OrderDTO.cs" />
     <Compile Include="Entities\Persistence\OrderItemDTO.cs" />
     <Compile Include="Entities\Persistence\ProductDTO.cs" />
+    <Compile Include="Entities\ViewModels\CustomerViewModel.cs" />
+    <Compile Include="Entities\ViewModels\OrderItemViewModel.cs" />
+    <Compile Include="Entities\ViewModels\OrderViewModel.cs" />
+    <Compile Include="Entities\ViewModels\ProductViewModel.cs" />
+    <Compile Include="Entities\ViewModels\StaffViewModel.cs" />
+    <Compile Include="Entities\ViewModels\StoreViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

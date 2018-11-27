@@ -8,6 +8,7 @@ using UWAdventure.Entities.Persistence;
 using System.Data.SqlClient;
 using UWAdventure.BLL;
 using UWAdventure.Entities.DTO;
+using UWAdventure.Entities.ViewModels;
 
 namespace UWAdventure.ConsoleApp
 {
@@ -17,18 +18,20 @@ namespace UWAdventure.ConsoleApp
         {
             OrderService orderService = new OrderService();
 
-            IList<NewOrderItemDTO> items = new List<NewOrderItemDTO>();
-            items.Add(new NewOrderItemDTO() {
-                product_id=242,
-                quantity=2
-            });
-            orderService.CreateOrder(new NewOrderDTO() {
-                customer_id = 3,
-                store_id = 2,
-                staff_id = 6,
-                order_date = DateTime.Now,
-                items = items
-            });
+            //IList<NewOrderItemDTO> items = new List<NewOrderItemDTO>();
+            //items.Add(new NewOrderItemDTO() {
+            //    product_id=242,
+            //    quantity=2
+            //});
+            //orderService.CreateOrder(new NewOrderDTO() {
+            //    customer_id = 3,
+            //    store_id = 2,
+            //    staff_id = 6,
+            //    order_date = DateTime.Now,
+            //    items = items
+            //});
+
+            IList<OrderViewModel> orders = orderService.GetOrderDetails(Convert.ToDateTime("1/1/2015"), Convert.ToDateTime("1/1/2017"));
 
             Console.WriteLine("Hit any key to close this windows...");
             Console.ReadKey();
@@ -68,7 +71,7 @@ namespace UWAdventure.ConsoleApp
             Console.WriteLine("Hello World!");
 
 
-            string connection_string = ConfigurationManager.ConnectionStrings["uwadventure-azure"].ConnectionString;
+            string connection_string = ConfigurationManager.ConnectionStrings["uwadventure"].ConnectionString;
 
             // create an empty list that holds OrderDTO objects
             IList<OrderDTO> orders = new List<OrderDTO>();
