@@ -16,9 +16,19 @@ namespace UWAdventure.ConsoleApp
         static void Main(string[] args)
         {
             OrderService orderService = new OrderService();
-            
-            
-            orderService.CreateOrder(new NewOrderDTO());
+
+            IList<NewOrderItemDTO> items = new List<NewOrderItemDTO>();
+            items.Add(new NewOrderItemDTO() {
+                product_id=242,
+                quantity=2
+            });
+            orderService.CreateOrder(new NewOrderDTO() {
+                customer_id = 3,
+                store_id = 2,
+                staff_id = 6,
+                order_date = DateTime.Now,
+                items = items
+            });
 
             Console.WriteLine("Hit any key to close this windows...");
             Console.ReadKey();

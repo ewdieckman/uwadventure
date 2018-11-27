@@ -2,7 +2,9 @@
 using UWAdventure.Data;
 using UWAdventure.Entities.DTO;
 using UWAdventure.Entities.Persistence;
+using UWAdventure.Enum;
 using UWAdventure.Events;
+using System.Collections.Generic;
 
 namespace UWAdventure.BLL
 {
@@ -15,6 +17,7 @@ namespace UWAdventure.BLL
         private readonly OrderDAO _orderDAO;
         private readonly OrderItemDAO _orderItemDAO;
         private readonly InventoryService _inventoryService;
+        private readonly ProductService _productService;
 
         public event EventHandler<OrderCreatedEventArgs> OrderCreated;         //event delegate for when order is created
         public event EventHandler<OrderShippedEventArgs> OrderShipped;         //event delegate for when order is shipped
@@ -27,7 +30,7 @@ namespace UWAdventure.BLL
             //_storeService = storeService;
             //_customerService = customerService;
             //_staffService = staffService;
-            //_productService = productService;
+            _productService = new ProductService();
         }
 
         /// <summary>
@@ -35,33 +38,69 @@ namespace UWAdventure.BLL
         /// </summary>
         /// <param name="orderDTO">information needed to create a new order</param>
         /// <returns>The newly created order's order number</returns>
-        public int CreateOrder(NewOrderDTO orderDTO)
+        public int CreateOrder(NewOrderDTO newOrderDTO)
         {
 
-            //int order_number = GenerateNewOrderNumber();
+            // this method is used to validate incoming data - NEVER TRUST DATA COMING FROM A UI
 
-            //Customer customer = _customerService.GetByID(orderDTO.customer_id);
-            //Store store = _storeService.GetByID(orderDTO.store_id);
-            //Staff created_by = _staffService.GetByID(orderDTO.staff_id);
+            int order_number = -1;
 
-            //OrderStatus orderStatus = GetNewOrderStatus();
+            // although we list the price of items in the UI, we never assume that the price being passed in is correct.
+            // we only pass in the product id, and then we lookup the price to ensure its accuracy
 
-            //Order order = new Order(order_number, customer,created_by,orderStatus,orderDTO.order_date, store);
+            // create the orderDTO for persistence and populate its properties
+            OrderDTO orderDTO = new OrderDTO()
+            {
+                customer_id = newOrderDTO.customer_id,
+                order_date = newOrderDTO.order_date,
+                staff_id = newOrderDTO.staff_id,
+                store_id = newOrderDTO.store_id,
+            };
 
-            //foreach(NewOrderItemDTO item in orderDTO.items)
-            //{
-            //    var product = _productService.GetByID(item.product_id);
-            //    order.AddItemToOrder(product, item.quantity, product.ListPrice);
-            //}
+            // now we'll use a method to get the order status
+            // a method is the preferred way, as maybe there is some business
+            // logic to determine was a new order's status is based on certain parameters
+            orderDTO.order_status = (int)GetNewOrderStatus();
 
-            OnOrderCreated(123456);
 
-            //Save(order);
-            //return order_number;
+            //save to the persistence store, and get the order number back?
+            order_number = _orderDAO.CreateOrder(orderDTO);
 
-            return 123456;
+            // now to populate items
+            OrderItemDTO orderItemDTO;
+            IList<OrderItemDTO> items = new List<OrderItemDTO>();
+            foreach (NewOrderItemDTO item in newOrderDTO.items)
+            {
+                var product = _productService.GetByID(item.product_id);
+                orderItemDTO = new OrderItemDTO()
+                {
+                    product_id = item.product_id,
+                    price = product.list_price,
+                    quantity = item.quantity,
+                    order_number = order_number
+                };
+
+                items.Add(orderItemDTO);
+            }
+
+            //now save the items to the persistence store
+            _orderItemDAO.CreateOrder(items);
+
+            OnOrderCreated(order_number);
+
+
+            return order_number;
         }
 
+
+        /// <summary>
+        /// Returns the status for a new order
+        /// </summary>
+        private OrderStatus GetNewOrderStatus()
+        {
+            //could have some additional logic where an order proceeds directly to processing or something.  For now, just use "Pending"
+            return OrderStatus.Pending;
+        }
 
 
         ///// <summary>
@@ -82,36 +121,6 @@ namespace UWAdventure.BLL
 
         //}
 
-        ///// <summary>
-        ///// Gets the <see cref="Order"/> by order number
-        ///// </summary>
-        //public Order GetByOrderNumber(int order_number)
-        //{
-        //    return DTOtoOrder(_orderDAO.GetByOrderNumber(order_number));
-        //}
-
-        ///// <summary>
-        ///// Generates a unique order number for the system
-        ///// </summary>
-        //private int GenerateNewOrderNumber()
-        //{
-
-        //    //pass this off to the DAO - will actually be just getting the next sequential identity number
-        //    //There is NO way to have a client-generated ID number that is guaranteed unique unless using a GUID
-        //    return _orderDAO.ReserveOrderNumber();
-
-        //}
-
-        ///// <summary>
-        ///// Returns the status for a new order
-        ///// </summary>
-        ///// <returns></returns>
-        //private OrderStatus GetNewOrderStatus()
-        //{
-        //    //could have some additional logic where an order proceeds directly to processing or something.  For now, just use "Pending"
-        //    return OrderStatus.Pending;
-        //}
-
         /// <summary>
         /// Trigger method called to raise the <see cref="OrderCreated"/> event
         /// </summary>
@@ -122,15 +131,15 @@ namespace UWAdventure.BLL
             OrderCreated?.Invoke(this, args);
         }
 
-        ///// <summary>
-        ///// Trigger method called to raise the <see cref="OrderShipped"/> event
-        ///// </summary>
-        //protected virtual void OnOrderShipped(int order_number)
-        //{
-        //    //null test, without making a copy while keeping thread-safety
-        //    OrderShippedEventArgs args = new OrderShippedEventArgs() { OrderNumber = order_number };
-        //    OrderShipped?.Invoke(this, args);
-        //}
+        /// <summary>
+        /// Trigger method called to raise the <see cref="OrderShipped"/> event
+        /// </summary>
+        protected virtual void OnOrderShipped(int order_number)
+        {
+            //null test, without making a copy while keeping thread-safety
+            OrderShippedEventArgs args = new OrderShippedEventArgs() { OrderNumber = order_number };
+            OrderShipped?.Invoke(this, args);
+        }
 
         //protected void Save(Order order)
         //{
