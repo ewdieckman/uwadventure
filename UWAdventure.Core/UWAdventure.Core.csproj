@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,11 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\InventoryService.cs" />
+    <Compile Include="BLL\OrderService.cs" />
     <Compile Include="Data\Interfaces\IOrderDAO.cs" />
     <Compile Include="Data\OrderDAO.cs" />
+    <Compile Include="Entities\DTO\NewOrderDTO.cs" />
+    <Compile Include="Entities\DTO\NewOrderItemDTO.cs" />
     <Compile Include="Entities\Enum\OrderStatus.cs" />
+    <Compile Include="Entities\Events\OrderCreatedEventArgs.cs" />
+    <Compile Include="Entities\Events\OrderShippedEventArgs.cs" />
     <Compile Include="Entities\Persistence\OrderDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,12 +6,54 @@ using System.Threading.Tasks;
 using System.Configuration;
 using UWAdventure.Entities.Persistence;
 using System.Data.SqlClient;
+using UWAdventure.BLL;
+using UWAdventure.Entities.DTO;
 
 namespace UWAdventure.ConsoleApp
 {
     class Program
     {
         static void Main(string[] args)
+        {
+            OrderService orderService = new OrderService();
+            
+            
+            orderService.CreateOrder(new NewOrderDTO());
+
+            Console.WriteLine("Hit any key to close this windows...");
+            Console.ReadKey();
+
+            Console.Clear();
+            Console.WriteLine("Page 2");
+            Console.SetCursorPosition(30, 40);
+            string pass = "";
+            do
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                // Backspace Should Not Work
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    pass += key.KeyChar;
+                    Console.Write("*");
+                }
+                else
+                {
+                    if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
+                    {
+                        pass = pass.Substring(0, (pass.Length - 1));
+                        Console.Write("\b \b");
+                    }
+                    else if (key.Key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
+                }
+            } while (true);
+            Console.WriteLine("Password = " + pass);
+            Console.ReadKey();
+        }
+
+        public void OtherStuff()
         {
             Console.WriteLine("Hello World!");
 
@@ -82,6 +124,8 @@ namespace UWAdventure.ConsoleApp
 
             Console.WriteLine("Hit any key to close this windows...");
             Console.ReadKey();
+
+
         }
     }
 }
