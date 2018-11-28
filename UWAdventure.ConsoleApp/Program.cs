@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Configuration;
 using UWAdventure.Entities.Persistence;
 using System.Data.SqlClient;
+using UWAdventure.Entities.DTO;
+using UWAdventure.BLL;
 
 namespace UWAdventure.ConsoleApp
 {
@@ -13,7 +15,22 @@ namespace UWAdventure.ConsoleApp
     {
         static void Main(string[] args)
         {
- 
+
+            NewOrderDTO newOrder = new NewOrderDTO();
+            newOrder.customer_id = 6;
+            newOrder.order_date = DateTime.Now;
+            newOrder.staff_id = 8;
+            newOrder.store_id = 3;
+
+            NewOrderItemDTO item = new NewOrderItemDTO();
+            item.product_id = 26;
+            item.quantity = 1;
+
+            newOrder.items.Add(item);
+
+            NewOrderCreator orderCreator = new NewOrderCreator();
+            orderCreator.CreateOrder(newOrder);
+
             Console.WriteLine("Hit any key to close this windows...");
             Console.ReadKey();
 
