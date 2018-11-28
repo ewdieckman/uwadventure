@@ -20,6 +20,8 @@ namespace UWAdventure.BLL
         private readonly OrderItemDAO _orderItemDAO;
         private readonly InventoryService _inventoryService;
         private readonly ProductService _productService;
+        private readonly NewOrderProcessor _newOrderProcessor;
+        private readonly NewOrderCreationNotificationService _newOrderNotifier;
 
         public event EventHandler<OrderCreatedEventArgs> OrderCreated;              //event delegate for when order is created
 
@@ -29,6 +31,9 @@ namespace UWAdventure.BLL
             _orderDAO = new OrderDAO();
             _orderItemDAO = new OrderItemDAO();
             _productService = new ProductService();
+            _newOrderNotifier = new NewOrderCreationNotificationService(this);
+            _newOrderProcessor = new NewOrderProcessor(this);
+
         }
 
         /// <summary>

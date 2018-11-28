@@ -26,6 +26,7 @@ namespace UWAdventure.BLL
         {
             newOrderCreator.OrderCreated += NewOrderCreated;
             _inventoryService = new InventoryService();
+            _orderDAO = new OrderDAO();
         }
 
         /// <summary>
@@ -88,8 +89,8 @@ namespace UWAdventure.BLL
         protected virtual void OnOrderIsRejected(OrderDTO orderDTO, ICollection<OrderItemDTO> items)
         {
             //null test, without making a copy while keeping thread-safety
-            OrderProcessingEventArgs args = new OrderProcessingEventArgs() { Order = orderDTO, Items = items };
-            OrderIsProcessing?.Invoke(this, args);
+            OrderRejectedEventArgs args = new OrderRejectedEventArgs() { Order = orderDTO, Items = items };
+            OrderIsRejected?.Invoke(this, args);
         }
 
         /// <summary>
