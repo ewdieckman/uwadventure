@@ -13,10 +13,19 @@ namespace UWAdventure.ConsoleApp
     {
         static void Main(string[] args)
         {
+ 
+            Console.WriteLine("Hit any key to close this windows...");
+            Console.ReadKey();
+
+        }
+
+        // things from Mon Nov 26 tutorial
+        public void OtherStuff()
+        {
             Console.WriteLine("Hello World!");
 
 
-            string connection_string = ConfigurationManager.ConnectionStrings["uwadventure-azure"].ConnectionString;
+            string connection_string = ConfigurationManager.ConnectionStrings["uwadventure"].ConnectionString;
 
             // create an empty list that holds OrderDTO objects
             IList<OrderDTO> orders = new List<OrderDTO>();
@@ -82,6 +91,8 @@ namespace UWAdventure.ConsoleApp
 
             Console.WriteLine("Hit any key to close this windows...");
             Console.ReadKey();
+
+
         }
     }
 }
