@@ -16,7 +16,7 @@ namespace UWAdventure.ConsoleApp
     {
         static void Main(string[] args)
         {
-            OrderService orderService = new OrderService();
+            OrderDetailViewer orderService = new OrderDetailViewer();
 
             //IList<NewOrderItemDTO> items = new List<NewOrderItemDTO>();
             //items.Add(new NewOrderItemDTO() {

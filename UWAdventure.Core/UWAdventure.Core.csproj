@@ -47,14 +47,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\InventoryService.cs" />
-    <Compile Include="BLL\OrderService.cs" />
+    <Compile Include="BLL\NewOrderCreator.cs" />
+    <Compile Include="BLL\NewOrderProcessingNotificationService.cs" />
+    <Compile Include="BLL\NewOrderProcessor.cs" />
+    <Compile Include="BLL\NewOrderCreationNotificationService.cs" />
+    <Compile Include="BLL\OrderDetailViewer.cs" />
     <Compile Include="BLL\ProductService.cs" />
     <Compile Include="Data\OrderDAO.cs" />
     <Compile Include="Data\OrderItemDAO.cs" />
     <Compile Include="Data\ProductDAO.cs" />
+    <Compile Include="Data\InventoryDAO.cs" />
     <Compile Include="Entities\DTO\NewOrderDTO.cs" />
     <Compile Include="Entities\DTO\NewOrderItemDTO.cs" />
     <Compile Include="Entities\Enum\OrderStatus.cs" />
+    <Compile Include="Entities\Events\OrderProcessingEventArgs.cs" />
+    <Compile Include="Entities\Events\OrderRejectedEventArgs.cs" />
+    <Compile Include="Entities\Events\OrderCompletedEventArgs.cs" />
     <Compile Include="Entities\Events\OrderCreatedEventArgs.cs" />
     <Compile Include="Entities\Events\OrderShippedEventArgs.cs" />
     <Compile Include="Entities\Persistence\OrderDTO.cs" />

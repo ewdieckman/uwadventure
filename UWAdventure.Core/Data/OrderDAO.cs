@@ -7,6 +7,7 @@ using UWAdventure.Entities.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UWAdventure.Enum;
 
 namespace UWAdventure.Data
 {
@@ -146,17 +147,38 @@ namespace UWAdventure.Data
             return orders;
         }
 
+        /// <summary>
+        /// returns full order details for a single order
+        /// </summary>
         public OrderViewModel GetOrderDetails(int order_number)
         {
             IList<OrderViewModel> orders = QueryForOrderDetails("orders.order_number=@order_number", new { order_number });
             return orders.Count > 0 ? orders[0] : null;
         }
 
+
+        /// <summary>
+        /// return full order details for a batch of orders in a date range
+        /// </summary>
         public IList<OrderViewModel> GetOrderDetails(DateTime start_date, DateTime end_date)
         {
             string where = " orders.order_date BETWEEN @start_date AND @end_date ORDER BY order_date DESC";
 
             return QueryForOrderDetails(where, new { start_date, end_date });
+        }
+
+        /// <summary>
+        /// Persists a new status for an order
+        /// </summary>
+        public void SetOrderStatus(int order_number, OrderStatus order_status)
+        {
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["uwadventure"].ConnectionString))
+            {
+                connection.Open();
+                string sql = @"UPDATE [sales].[orders] SET order_status = @order_status WHERE order_number=@order_number;";
+                connection.Execute(sql, new { order_number, order_status });
+            }
+
         }
     }
 }
