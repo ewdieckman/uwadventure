@@ -22,7 +22,7 @@ namespace UWAdventure.Forms
         /// </summary>
         private void mnu_Reports_OrderSummary_Click(object sender, EventArgs e)
         {
-
+            GoToOrderSummary();
         }
 
 
@@ -31,7 +31,7 @@ namespace UWAdventure.Forms
         /// </summary>
         private void btnOrderSummary_Click(object sender, EventArgs e)
         {
-            GoToCreateOrder();
+            GoToOrderSummary();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace UWAdventure.Forms
         /// </summary>
         private void mnu_Orders_Create_Click(object sender, EventArgs e)
         {
-
+            GoToCreateOrder();
         }
 
         /// <summary>
@@ -94,5 +94,11 @@ namespace UWAdventure.Forms
             Hide();
         }
 
+        private void GoToOrderSummary()
+        {
+            frmOrderSummary frmSummary = new frmOrderSummary(this);
+            frmSummary.Show();
+            Hide();
+        }
     }
 }

@@ -39,6 +39,8 @@ namespace UWAdventure.Forms
             InitializeComponent();
         }
 
+
+        #region "Control Events"
         /// <summary>
         /// Event handler for Create Order button
         /// </summary>
@@ -112,6 +114,20 @@ namespace UWAdventure.Forms
             InitialFormPopulate();
         }
 
+        #endregion
+
+        #region "Form Events"
+        /// <summary>
+        /// Event handler for while the form is closing
+        /// </summary>
+        private void frmCreateOrder_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _calling_form.Show();
+        }
+
+        #endregion
+
+        #region "Populating form controls"
         /// <summary>
         /// Populates the form with the initial information
         /// </summary>
@@ -126,7 +142,6 @@ namespace UWAdventure.Forms
             // grab 10 random products for the product list box
             LoadProducts();
         }
-
         /// <summary>
         /// Loads the stores list into the store combobox
         /// </summary>
@@ -135,7 +150,7 @@ namespace UWAdventure.Forms
             IList<StoreViewModel> stores = _storeViewer.GetAllStores();
 
             // populate the combobox
-            foreach(StoreViewModel store in stores)
+            foreach (StoreViewModel store in stores)
             {
                 cbStore.Items.Add(store);
             }
@@ -182,7 +197,7 @@ namespace UWAdventure.Forms
             IList<StaffViewModel> staff = _staffViewer.GetAllEmployesByStore(store_id);
 
             //populate combobox
-            foreach(StaffViewModel employee in staff)
+            foreach (StaffViewModel employee in staff)
             {
                 cbStaff.Items.Add(employee);
             }
@@ -190,16 +205,10 @@ namespace UWAdventure.Forms
             //select the top option by default
             cbStaff.SelectedIndex = 0;
         }
+        #endregion
 
 
-        /// <summary>
-        /// Event handler for while the form is closing
-        /// </summary>
-        private void frmCreateOrder_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _calling_form.Show();
-        }
-
+        #region "Order creation"
         /// <summary>
         /// creates an order from the form
         /// </summary>
@@ -220,7 +229,7 @@ namespace UWAdventure.Forms
 
 
         }
-        
+
         /// <summary>
         /// Creates the new order DTO
         /// </summary>
@@ -240,7 +249,7 @@ namespace UWAdventure.Forms
                 store_id = selected_store.StoreID
             };
 
-            newOrderDTO.items.Add(CreateOrderItemDTO(selected_product,quantity));
+            newOrderDTO.items.Add(CreateOrderItemDTO(selected_product, quantity));
 
             return newOrderDTO;
         }
@@ -258,6 +267,11 @@ namespace UWAdventure.Forms
 
             return newOrderItem;
         }
+        #endregion
+
+
+
+
     }
 }
 

@@ -52,6 +52,7 @@
     <Compile Include="BLL\NewOrderProcessor.cs" />
     <Compile Include="BLL\NewOrderCreationNotificationService.cs" />
     <Compile Include="BLL\OrderDetailViewer.cs" />
+    <Compile Include="BLL\OrderSummaryViewer.cs" />
     <Compile Include="BLL\ProductService.cs" />
     <Compile Include="BLL\ProductViewer.cs" />
     <Compile Include="BLL\StaffViewer.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Entities\ViewModels\OrderViewModel.cs" />
     <Compile Include="Entities\ViewModels\ProductViewModel.cs" />
     <Compile Include="Entities\ViewModels\StaffViewModel.cs" />
+    <Compile Include="Entities\ViewModels\StoreOrderSummaryViewModel.cs" />
     <Compile Include="Entities\ViewModels\StoreViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
