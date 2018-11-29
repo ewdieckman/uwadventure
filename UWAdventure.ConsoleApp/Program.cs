@@ -14,65 +14,366 @@ namespace UWAdventure.ConsoleApp
 {
     class Program
     {
+        private static OrderSummaryViewer _orderSummaryViewer;
+        private static StoreViewer _storeViewer;
+        private static StaffViewer _staffViewer;
+        private static ProductViewer _productViewer;
+        private static CustomerViewer _customerViewer;
+
+        private static NewOrderCreator _newOrderCreator;
+
         static void Main(string[] args)
         {
 
+            string menu_return;
+            do
+            {
+                menu_return = MainMenu();
+            } while (menu_return != "9");
+
+        }
 
 
-            Console.WriteLine("Hit any key to close this windows...");
-            Console.ReadKey();
+        /// <summary>
+        /// Main menu UI
+        /// </summary>
+        public static string MainMenu()
+        {
+            WriteHeader();
+            Console.WriteLine("MAIN MENU:");
+            Console.WriteLine();
+            Console.WriteLine("1. Create Order");
+            Console.WriteLine("2. Order Summary");
+            Console.WriteLine("");
+            Console.WriteLine("9. Exit POS");
 
-            ////OrderDetailViewer orderService = new OrderDetailViewer();
-            //NewOrderCreator orderCreator = new NewOrderCreator();
+            CommandPrompt("Enter menu option");
+            string selection = Console.ReadLine();
 
-            //IList<NewOrderItemDTO> items = new List<NewOrderItemDTO>();
-            //items.Add(new NewOrderItemDTO()
-            //{
-            //    product_id = 242,
-            //    quantity = 3
-            //});
-            //orderCreator.CreateOrder(new NewOrderDTO()
-            //{
-            //    customer_id = 3,
-            //    store_id = 2,
-            //    staff_id = 6,
-            //    order_date = DateTime.Now,
-            //    items = items
-            //});
+            if (selection == "1")
+            {
+                CreateOrderForm();
+            }
+            else if (selection == "2")
+            {
+                string menu_return;
+                do
+                {
+                    menu_return = OrderSummaryMenu();
+                } while (menu_return != "9");
+            }
+            else if (selection != "9")
+            {
+                Console.WriteLine("Invalid entry.");
+                Console.WriteLine("Press any key....");
+                Console.ReadKey();
+            }
 
-            ////IList<OrderViewModel> orders = orderService.GetOrderDetails(Convert.ToDateTime("1/1/2015"), Convert.ToDateTime("1/1/2017"));
+            return selection;
 
-            //Console.WriteLine("Hit any key to close this windows...");
-            //Console.ReadKey();
+        }
 
-            //Console.Clear();
-            //Console.WriteLine("Page 2");
-            //Console.SetCursorPosition(30, 40);
-            //string pass = "";
-            //do
-            //{
-            //    ConsoleKeyInfo key = Console.ReadKey(true);
-            //    // Backspace Should Not Work
-            //    if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-            //    {
-            //        pass += key.KeyChar;
-            //        Console.Write("*");
-            //    }
-            //    else
-            //    {
-            //        if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
-            //        {
-            //            pass = pass.Substring(0, (pass.Length - 1));
-            //            Console.Write("\b \b");
-            //        }
-            //        else if (key.Key == ConsoleKey.Enter)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //} while (true);
-            //Console.WriteLine("Password = " + pass);
-            //Console.ReadKey();
+        /// <summary>
+        /// Runs the order form in the UI
+        /// </summary>
+        private static void CreateOrderForm()
+        {
+            int store_id, staff_id, product_id, customer_id, quantity;
+
+            if (_storeViewer == null)
+                _storeViewer = new StoreViewer();
+            if (_staffViewer == null)
+                _staffViewer = new StaffViewer();
+            if (_productViewer == null)
+                _productViewer = new ProductViewer();
+            if (_customerViewer == null)
+                _customerViewer = new CustomerViewer();
+            if (_newOrderCreator == null)
+                _newOrderCreator = new NewOrderCreator();
+
+            IList<StaffViewModel> staff;
+            IList<StoreViewModel> stores = _storeViewer.GetAllStores();
+            IList<CustomerViewModel> customers = _customerViewer.GetRandom10();
+            IList<ProductViewModel> products = _productViewer.GetRandom10();
+
+            WriteHeader();
+            WriteOrderFormHeader();
+
+            Console.WriteLine("Select store:");
+            Console.WriteLine("---------------");
+            for (var i = 0;i<stores.Count;i++)
+            {
+                Console.WriteLine("{0}. {1}", i + 1, stores[i].Name);
+            }
+
+            CommandPrompt("Select store");
+            string str_store_id = Console.ReadLine();
+
+            //validate the incoming store_id
+            if (!Int32.TryParse(str_store_id, out store_id) || store_id > stores.Count || store_id < 1)
+            {
+                Console.WriteLine("Invalid store entry.  Press any key...");
+                Console.ReadKey();
+                return;
+            }
+
+            //store_id is valid - grab employees
+            staff = _staffViewer.GetAllEmployesByStore(store_id);
+
+            //write the employee info onscreen
+            WriteHeader();
+            WriteOrderFormHeader();
+
+            Console.WriteLine("Select salesperson:");
+            Console.WriteLine("--------------------");
+            for (var i = 0; i < staff.Count; i++)
+            {
+                Console.WriteLine("{0}. {1} {2}", i + 1, staff[i].FirstName, staff[i].LastName);
+            }
+            CommandPrompt("Select salesperson");
+            string str_staff_id = Console.ReadLine();
+
+            //validate the incoming staff_id
+            if (!Int32.TryParse(str_staff_id, out staff_id) || staff_id > staff.Count || staff_id < 1)
+            {
+                Console.WriteLine("Invalid salesperson entry.  Press any key...");
+                Console.ReadKey();
+                return;
+            }
+
+            //staff_id is valid - print out customers
+            WriteHeader();
+            WriteOrderFormHeader();
+            Console.WriteLine("Select customer:");
+            Console.WriteLine("--------------------");
+            for (var i = 0; i < customers.Count; i++)
+            {
+                Console.WriteLine("{0}. {1} {2}", i + 1, customers[i].FirstName, customers[i].LastName);
+            }
+            CommandPrompt("Select customer");
+            string str_customer_id = Console.ReadLine();
+
+            //validate the incoming customer_id
+            if (!Int32.TryParse(str_customer_id, out customer_id) || customer_id > customers.Count || customer_id < 1)
+            {
+                Console.WriteLine("Invalid customer entry.  Press any key...");
+                Console.ReadKey();
+                return;
+            }
+
+
+            //customer_id is valid - print out products
+            WriteHeader();
+            WriteOrderFormHeader();
+            Console.WriteLine("Select product:");
+            Console.WriteLine("--------------------");
+            for (var i = 0; i < products.Count; i++)
+            {
+                Console.WriteLine("{0}. {1}", i + 1, products[i].Name);
+            }
+            CommandPrompt("Select product");
+            string str_product_id = Console.ReadLine();
+
+            //validate the incoming product_id
+            if (!Int32.TryParse(str_product_id, out product_id) || product_id > products.Count || product_id < 1)
+            {
+                Console.WriteLine("Invalid product entry.  Press any key...");
+                Console.ReadKey();
+                return;
+            }
+
+            //product_id is valid - print out quantity
+            WriteHeader();
+            WriteOrderFormHeader();
+            Console.WriteLine("Select quantity:");
+            string str_quantity = Console.ReadLine();
+
+            //validate the incoming product_id
+            if (!Int32.TryParse(str_quantity, out quantity) || quantity < 1)
+            {
+                Console.WriteLine("Invalid quantity.  Press any key...");
+                Console.ReadKey();
+                return;
+            }
+
+            //all inputs valid - show an order summary screen
+            WriteHeader();
+            WriteOrderFormHeader();
+            Console.WriteLine("Order Details:");
+            Console.WriteLine("----------------");
+            Console.WriteLine("Entered by {0} {1} at {2}", staff[staff_id - 1].FirstName, staff[staff_id - 1].LastName, stores[store_id - 1].Name);
+            Console.WriteLine("Order for {0} {1}", customers[customer_id - 1].FirstName, customers[customer_id - 1].LastName);
+            Console.WriteLine(products[product_id - 1].Name);
+            Console.WriteLine("Qty: {0}", quantity);
+            CommandPrompt("Is this correct? (Y/N)");
+            string str_response = Console.ReadLine();
+
+            if (str_response.ToLower() == "y")
+            {
+                NewOrderDTO newOrder = new NewOrderDTO() {
+                    store_id = store_id,
+                    staff_id = staff_id,
+                    customer_id = customer_id,
+                    order_date = DateTime.Now,
+                };
+
+                NewOrderItemDTO newItem = new NewOrderItemDTO()
+                {
+                    product_id = product_id,
+                    quantity = quantity
+                };
+
+                newOrder.items.Add(newItem);
+
+                _newOrderCreator = new NewOrderCreator();
+                try
+                {
+                    int order_number = _newOrderCreator.CreateOrder(newOrder);
+                    WriteHeader();
+                    WriteOrderFormHeader();
+                    Console.WriteLine("Order #{0} created successfully.", order_number);
+                    Console.WriteLine("Press any key...");
+                    Console.ReadKey();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                return;
+            }
+            
+        }
+
+        /// <summary>
+        /// Writes the order form header to the UI
+        /// </summary>
+        private static void WriteOrderFormHeader()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Create New Order");
+            Console.WriteLine("#######################");
+            Console.WriteLine();
+            Console.WriteLine();
+
+        }
+        /// <summary>
+        /// Order summary menu UI
+        /// </summary>
+        public static string OrderSummaryMenu()
+        {
+            WriteHeader();
+            Console.WriteLine("ORDER SUMMARY:");
+            Console.WriteLine();
+            Console.WriteLine("1. Run Order Summary");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("9. Return to the Main Menu");
+            CommandPrompt("Enter menu option");
+            string selection = Console.ReadLine();
+
+            if (selection == "1")
+            {
+                RunOrderSummary();
+            }
+            else if (selection != "9")
+            {
+                Console.WriteLine("Invalid entry.");
+                Console.WriteLine("Press any key....");
+                Console.ReadKey();
+                
+            }
+
+            return selection;
+        }
+
+        /// <summary>
+        /// Runs the order summary
+        /// </summary>
+        private static void RunOrderSummary()
+        {
+            if (_orderSummaryViewer == null)
+                _orderSummaryViewer = new OrderSummaryViewer();
+
+            WriteHeader();
+
+            Console.WriteLine("Enter start date in range:  (format M/D/YYYY)");
+            string str_start_date = Console.ReadLine();
+            Console.WriteLine();
+            Console.WriteLine("Enter end date in range:  (format M/D/YYYY)");
+            string str_end_date = Console.ReadLine();
+
+            DateTime start_date, end_date;
+
+            if (!DateTime.TryParse(str_start_date, out start_date) || !DateTime.TryParse(str_end_date, out end_date))
+            {
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("Invalid date entries.  Press any key...");
+                Console.ReadKey();
+                return;
+            }
+            else
+            {
+                IList<StoreOrderSummaryViewModel> stats = _orderSummaryViewer.GetStoreOrderSummary(start_date, end_date);
+
+                Console.Clear();
+                Console.WriteLine("Order Summary from {0:M/d/yyyy} to {1:M/d/yyyy}", start_date, end_date);
+                Console.WriteLine("###############################################################################################");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+
+
+                Console.WriteLine("{0,-30} {1,9} {2,9} {3,9} {4,19}", "Store", "Orders", "Products", "Quantity", "Revenue");
+                Console.WriteLine("================================================================================");
+                foreach (StoreOrderSummaryViewModel stat in stats)
+                {
+                    PrintOutSummaryLine(stat);
+                }
+
+                Console.CursorTop = Console.WindowHeight - Console.CursorTop - 2;
+                Console.WriteLine("Press any key....");
+                Console.ReadKey();
+            }
+
+            
+        }
+
+        /// <summary>
+        /// prints out a summary line 
+        /// </summary>
+        /// <param name="stat"></param>
+        private static void PrintOutSummaryLine(StoreOrderSummaryViewModel stat)
+        {
+            // custom line formatting information is here:
+            // https://docs.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting
+
+            Console.WriteLine("{0,-30} {1,9} {2,9} {3,9} {4,19:c}", 
+                stat.StoreName, stat.NumberOfOrders, stat.NumberOfUniqueProducts, stat.NumberOfItems, stat.TotalRevenue);
+        }
+
+        /// <summary>
+        /// Writes the command prompt
+        /// </summary>
+        private static void CommandPrompt(string prompt = "")
+        {
+            //put the cursor at the bottom of the screen
+            Console.CursorTop = Console.WindowHeight - 5;
+            Console.WriteLine(prompt == string.Empty ? "Enter command" : prompt + ":");
+            Console.Write("# ");
+
+        }
+
+        /// <summary>
+        /// Writes the UI header
+        /// </summary>
+        /// <remarks>Clears the screen as well</remarks>
+        private static void WriteHeader()
+        {
+            Console.Clear();
+            Console.WriteLine("#### UW Adventure POS ####");
+            Console.WriteLine();
+            Console.WriteLine();
         }
 
         public void OtherStuff()
