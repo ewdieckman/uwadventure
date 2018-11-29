@@ -16,57 +16,63 @@ namespace UWAdventure.ConsoleApp
     {
         static void Main(string[] args)
         {
-            //OrderDetailViewer orderService = new OrderDetailViewer();
-            NewOrderCreator orderCreator = new NewOrderCreator();
 
-            IList<NewOrderItemDTO> items = new List<NewOrderItemDTO>();
-            items.Add(new NewOrderItemDTO()
-            {
-                product_id = 242,
-                quantity = 3
-            });
-            orderCreator.CreateOrder(new NewOrderDTO()
-            {
-                customer_id = 3,
-                store_id = 2,
-                staff_id = 6,
-                order_date = DateTime.Now,
-                items = items
-            });
 
-            //IList<OrderViewModel> orders = orderService.GetOrderDetails(Convert.ToDateTime("1/1/2015"), Convert.ToDateTime("1/1/2017"));
 
             Console.WriteLine("Hit any key to close this windows...");
             Console.ReadKey();
 
-            Console.Clear();
-            Console.WriteLine("Page 2");
-            Console.SetCursorPosition(30, 40);
-            string pass = "";
-            do
-            {
-                ConsoleKeyInfo key = Console.ReadKey(true);
-                // Backspace Should Not Work
-                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-                {
-                    pass += key.KeyChar;
-                    Console.Write("*");
-                }
-                else
-                {
-                    if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
-                    {
-                        pass = pass.Substring(0, (pass.Length - 1));
-                        Console.Write("\b \b");
-                    }
-                    else if (key.Key == ConsoleKey.Enter)
-                    {
-                        break;
-                    }
-                }
-            } while (true);
-            Console.WriteLine("Password = " + pass);
-            Console.ReadKey();
+            ////OrderDetailViewer orderService = new OrderDetailViewer();
+            //NewOrderCreator orderCreator = new NewOrderCreator();
+
+            //IList<NewOrderItemDTO> items = new List<NewOrderItemDTO>();
+            //items.Add(new NewOrderItemDTO()
+            //{
+            //    product_id = 242,
+            //    quantity = 3
+            //});
+            //orderCreator.CreateOrder(new NewOrderDTO()
+            //{
+            //    customer_id = 3,
+            //    store_id = 2,
+            //    staff_id = 6,
+            //    order_date = DateTime.Now,
+            //    items = items
+            //});
+
+            ////IList<OrderViewModel> orders = orderService.GetOrderDetails(Convert.ToDateTime("1/1/2015"), Convert.ToDateTime("1/1/2017"));
+
+            //Console.WriteLine("Hit any key to close this windows...");
+            //Console.ReadKey();
+
+            //Console.Clear();
+            //Console.WriteLine("Page 2");
+            //Console.SetCursorPosition(30, 40);
+            //string pass = "";
+            //do
+            //{
+            //    ConsoleKeyInfo key = Console.ReadKey(true);
+            //    // Backspace Should Not Work
+            //    if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+            //    {
+            //        pass += key.KeyChar;
+            //        Console.Write("*");
+            //    }
+            //    else
+            //    {
+            //        if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
+            //        {
+            //            pass = pass.Substring(0, (pass.Length - 1));
+            //            Console.Write("\b \b");
+            //        }
+            //        else if (key.Key == ConsoleKey.Enter)
+            //        {
+            //            break;
+            //        }
+            //    }
+            //} while (true);
+            //Console.WriteLine("Password = " + pass);
+            //Console.ReadKey();
         }
 
         public void OtherStuff()

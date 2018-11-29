@@ -20,5 +20,14 @@ namespace UWAdventure.Entities.ViewModels
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+
+        public override string ToString()
+        {
+            if (FirstName == string.Empty || LastName == string.Empty)
+                return base.ToString();
+            else
+                return string.Format("{0}, {1}", LastName, FirstName);
+
+        }
     }
 }

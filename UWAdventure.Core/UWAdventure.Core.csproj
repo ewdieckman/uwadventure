@@ -53,10 +53,17 @@
     <Compile Include="BLL\NewOrderCreationNotificationService.cs" />
     <Compile Include="BLL\OrderDetailViewer.cs" />
     <Compile Include="BLL\ProductService.cs" />
+    <Compile Include="BLL\ProductViewer.cs" />
+    <Compile Include="BLL\StaffViewer.cs" />
+    <Compile Include="BLL\CustomerViewer.cs" />
+    <Compile Include="BLL\StoreViewer.cs" />
+    <Compile Include="Data\CustomerDAO.cs" />
     <Compile Include="Data\OrderDAO.cs" />
     <Compile Include="Data\OrderItemDAO.cs" />
     <Compile Include="Data\ProductDAO.cs" />
     <Compile Include="Data\InventoryDAO.cs" />
+    <Compile Include="Data\StaffDAO.cs" />
+    <Compile Include="Data\StoreDAO.cs" />
     <Compile Include="Entities\DTO\NewOrderDTO.cs" />
     <Compile Include="Entities\DTO\NewOrderItemDTO.cs" />
     <Compile Include="Entities\Enum\OrderStatus.cs" />
