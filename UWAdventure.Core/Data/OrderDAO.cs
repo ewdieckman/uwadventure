@@ -22,8 +22,19 @@ namespace UWAdventure.Data
         /// </summary>
         public int CreateOrder(OrderDTO orderDTO)
         {
+            int order_number = -1;
 
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["uwadventure"].ConnectionString))
+            {
+                connection.Open();
+                string sql = @"INSERT INTO [sales].[orders] (customer_id, order_status, order_date, shipped_date, store_id, staff_id) 
+                                VALUES (@customer_id, @order_status, @order_date, @shipped_date, @store_id, @staff_id);
+
+                                SELECT CONVERT(int, SCOPE_IDENTITY());";
+                order_number = (int)connection.ExecuteScalar(sql, orderDTO);
+            }
+
+            return order_number;
         }
 
 
@@ -172,10 +183,37 @@ namespace UWAdventure.Data
 
         public IList<StoreOrderSummaryViewModel> GetStoreOrderSummary(DateTime start_date, DateTime end_date)
         {
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["uwadventure"].ConnectionString))
+            {
+                connection.Open();
+                string sql = @"SELECT summary.count_orders AS NumberOfOrders
+	                ,summary.count_products AS NumberOfUniqueProducts
+	                ,summary.total_items AS NumberOfItems
+	                ,summary.total_revenue AS TotalRevenue
+	                ,stores.store_name AS StoreName FROM
+	                (
+		                SELECT 
+			                orders.store_id
+			                ,COUNT(DISTINCT orders.order_number) AS count_orders
+			                ,COUNT(DISTINCT order_items.product_id) AS count_products
+			                ,SUM(order_items.quantity) AS total_items
+			                ,SUM(order_items.price) AS total_revenue
+			                FROM sales.orders AS orders
 
+			                INNER JOIN 
+			                sales.order_items AS order_items ON orders.order_number = order_items.order_number
 
-            throw new NotImplementedException();
+			                WHERE order_date BETWEEN @start_date AND @end_date
 
+			                GROUP BY store_id
+	                ) AS summary
+	                INNER JOIN
+	                sales.stores AS stores ON summary.store_id = stores.store_id
+	                ORDER BY stores.store_name;";
+                IList<StoreOrderSummaryViewModel> stats = connection.Query<StoreOrderSummaryViewModel>(sql, new { start_date, end_date }).AsList();
+
+                return stats;
+            }
         }
     }
 }
