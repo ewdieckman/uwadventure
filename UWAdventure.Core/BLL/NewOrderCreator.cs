@@ -73,9 +73,33 @@ namespace UWAdventure.BLL
             // business logic.  But it unfortunately is necessary when not using an advanced framework for persistence
             orderDTO.order_number = order_number;
 
+            // now to populate items
+            OrderItemDTO orderItemDTO;
+            IList<OrderItemDTO> items = new List<OrderItemDTO>();
+            foreach (NewOrderItemDTO item in newOrderDTO.items)
+            {
+                var product = _productService.GetByID(item.product_id);
+                orderItemDTO = new OrderItemDTO()
+                {
+                    product_id = item.product_id,
+                    price = product.list_price,
+                    quantity = item.quantity,
+                    order_number = order_number
+                };
+
+                items.Add(orderItemDTO);
+            }
+
+            //now save the items to the persistence store
+            _orderItemDAO.CreateOrder(items);
+
+            OnOrderCreated(orderDTO, items);
 
 
+            return order_number;
         }
+
+
         /// <summary>
         /// Returns the status for a new order
         /// </summary>

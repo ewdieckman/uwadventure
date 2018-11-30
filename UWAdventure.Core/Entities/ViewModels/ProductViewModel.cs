@@ -17,5 +17,14 @@ namespace UWAdventure.Entities.ViewModels
         public short ModelYear { get; set; }
         public string Category { get; set; }
         public string Brand { get; set; }
+
+        public override string ToString()
+        {
+            if (Name == string.Empty)
+                return base.ToString();
+            else
+                return Name;
+
+        }
     }
 }

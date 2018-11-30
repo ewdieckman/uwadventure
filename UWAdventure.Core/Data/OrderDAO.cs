@@ -22,19 +22,8 @@ namespace UWAdventure.Data
         /// </summary>
         public int CreateOrder(OrderDTO orderDTO)
         {
-            int order_number = -1;
 
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["uwadventure"].ConnectionString))
-            {
-                connection.Open();
-                string sql = @"INSERT INTO [sales].[orders] (customer_id, order_status, order_date, shipped_date, store_id, staff_id) 
-                                VALUES (@customer_id, @order_status, @order_date, @shipped_date, @store_id, @staff_id);
-
-                                SELECT CONVERT(int, SCOPE_IDENTITY());";
-                order_number = (int)connection.ExecuteScalar(sql, orderDTO);
-            }
-
-            return order_number;
+            throw new NotImplementedException();
         }
 
 
@@ -178,6 +167,14 @@ namespace UWAdventure.Data
                 string sql = @"UPDATE [sales].[orders] SET order_status = @order_status WHERE order_number=@order_number;";
                 connection.Execute(sql, new { order_number, order_status });
             }
+
+        }
+
+        public IList<StoreOrderSummaryViewModel> GetStoreOrderSummary(DateTime start_date, DateTime end_date)
+        {
+
+
+            throw new NotImplementedException();
 
         }
     }

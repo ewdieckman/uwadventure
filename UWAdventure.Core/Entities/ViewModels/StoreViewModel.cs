@@ -19,5 +19,13 @@ namespace UWAdventure.Entities.ViewModels
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+
+        public override string ToString()
+        {
+            if (Name == String.Empty)
+                return base.ToString();
+            else
+                return Name;
+        }
     }
 }

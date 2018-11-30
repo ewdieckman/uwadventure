@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWAdventure.ConsoleApp", "U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWAdventure.Core", "UWAdventure.Core\UWAdventure.Core.csproj", "{860EB3A9-2B3E-416D-A598-0A4C9FDC6246}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWAdventure.Forms", "UWAdventure.Forms\UWAdventure.Forms.csproj", "{3EA1761C-97E2-48A6-B781-B6C1085A1A55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{860EB3A9-2B3E-416D-A598-0A4C9FDC6246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{860EB3A9-2B3E-416D-A598-0A4C9FDC6246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{860EB3A9-2B3E-416D-A598-0A4C9FDC6246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EA1761C-97E2-48A6-B781-B6C1085A1A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EA1761C-97E2-48A6-B781-B6C1085A1A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EA1761C-97E2-48A6-B781-B6C1085A1A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EA1761C-97E2-48A6-B781-B6C1085A1A55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

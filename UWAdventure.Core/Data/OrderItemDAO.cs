@@ -28,15 +28,8 @@ namespace UWAdventure.Data
         /// </summary>
         public void CreateOrder(IList<OrderItemDTO> orderItems)
         {
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["uwadventure"].ConnectionString))
-            {
-                SqlCommand command = connection.CreateCommand();
 
-                string sql = "INSERT INTO sales.order_items (order_number, product_id, quantity, price) VALUES (@order_number, @product_id, @quantity, @price);";
-
-                //Dapper will iterate through and insert each.
-                connection.Execute(sql, orderItems);
-            }
+            throw new NotImplementedException();
         }
 
 
