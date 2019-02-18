@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWAdventure.Core", "UWAdven
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWAdventure.Forms", "UWAdventure.Forms\UWAdventure.Forms.csproj", "{3EA1761C-97E2-48A6-B781-B6C1085A1A55}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console-Forms (Legacy)", "Console-Forms (Legacy)", "{BD7D0949-7124-47AF-8A70-B70952E03EBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AAB8C4A6-6D94-46F5-9EBA-66B0A2120990} = {BD7D0949-7124-47AF-8A70-B70952E03EBD}
+		{3EA1761C-97E2-48A6-B781-B6C1085A1A55} = {BD7D0949-7124-47AF-8A70-B70952E03EBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17A67292-ECCB-4DD2-B2E1-D60F9AB1FFFB}
