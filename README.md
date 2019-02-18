@@ -18,3 +18,6 @@ Database scripts are located in the Database SQL folder to setup an initial sche
 
 New versions of this solution will be push into this repository as time progresses to include additional functionality in the app.
 
+## API Documentation
+
+View class and method signatures at the [API Documentation](https://aae.wisc.edu/ewdieckman/uwadventure/api/)
