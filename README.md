@@ -21,3 +21,11 @@ New versions of this solution will be push into this repository as time progress
 ## API Documentation
 
 View class and method signatures at the [API Documentation](https://aae.wisc.edu/ewdieckman/uwadventure/api/)
+
+## Web Design Links
+
+General information about Responsive Web Design (grid system) [https://www.w3schools.com/cSS/css_rwd_grid.asp](https://www.w3schools.com/cSS/css_rwd_grid.asp)
+
+The responsive grid system as implement by the [Bootstrap Framework](https://www.w3schools.com/bootstrap/bootstrap_grid_system.asp)
+
+Documentation about [Bootstrap 3](https://getbootstrap.com/docs/3.4/) (used by MVC templates) 
