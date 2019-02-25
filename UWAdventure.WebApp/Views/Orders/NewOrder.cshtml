@@ -13,10 +13,8 @@
     <div class="form-group">
         <label for="ddStore" class="col-sm-2 control-label">Store:</label>
         <div class="col-sm-10">
-            <select id="ddStore" class="form-control" name="Store">
-                <option value="">~ Select store ~</option>
-                <option value="1">Store 1</option>
-            </select>
+            @Model.Store.Name
+            <input type="hidden" value="@Model.Store.StoreID"/>
         </div>
     </div>
     <!--END of Store form field -->
@@ -26,10 +24,52 @@
         <div class="col-sm-10">
             <select id="ddAssociate" class="form-control" name="SalesAssociate">
                 <option value="">~ Select associate ~</option>
+                @foreach(var assoc in Model.Staff)
+                {
+                    <option value="@assoc.StaffID">@assoc.FirstName @assoc.LastName</option>
+                }
             </select>
         </div>
     </div>
     <!--END of Sales Associate form field -->
+    <!--START of Customer form field -->
+    <div class="form-group">
+        <label for="lstCustomer" class="col-sm-2 control-label">Customer:</label>
+        <div class="col-sm-10">
+            <select id="lstCustomer" class="form-control" name="Customer" size="7">
+                <!--CustomerID    FirstName LastName -->
+                @foreach (var customer in Model.Customers)
+                {
+                    <option value="@customer.CustomerID">@customer.FirstName @customer.LastName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <!--END of Customer form field -->
+    <!--START of Products form field -->
+    <div class="form-group">
+        <label for="lstProduct" class="col-sm-2 control-label">Product:</label>
+        <div class="col-sm-10">
+            <select id="lstProduct" class="form-control" name="Product" size="7">
+                @foreach (var product in Model.Products)
+                {
+                    <option value="@product.ProductID">@product.Name (@product.ListPrice.ToString("c"))</option>
+                }
+
+            </select>
+        </div>
+    </div>
+    <!--END of Products form field -->
+    <!--START of Quantity form field -->
+    <div class="form-group">
+        <label for="txtQuantity" class="col-sm-2 control-label">Quantity:</label>
+        <div class="col-sm-10">
+            <input id="txtQuantity" name="Quantity" type="text" placeholder="Qty" class="form-control" />
+        </div>
+    </div>
+    <!--END of Quantity form field -->
+
+
 </div>
 }
 
