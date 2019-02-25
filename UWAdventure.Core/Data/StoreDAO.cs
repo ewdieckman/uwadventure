@@ -43,5 +43,34 @@ namespace UWAdventure.Data
 
             return stores;
         }
+
+        /// <summary>
+        /// Returns view model of a single store in UWAdventure
+        /// </summary>
+        /// <returns></returns>
+        public StoreViewModel GetStore(int store_id)
+        {
+
+            StoreViewModel store;
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["uwadventure"].ConnectionString))
+            {
+                connection.Open();
+
+                string sql = @"SELECT [store_id] AS StoreID
+                                  ,[store_name] AS [Name]
+                                  ,[phone] AS Phone
+                                  ,[email] AS Email
+                                  ,[street] AS Street
+                                  ,[city] AS City
+                                  ,[state] AS State
+                                  ,[zip_code] AS ZipCode
+                              FROM [sales].[stores] WHERE store_id=@store_id ORDER BY store_name;";
+                store = connection.QueryFirstOrDefault<StoreViewModel>(sql, new { store_id = store_id });
+
+            }
+
+            return store;
+        }
     }
 }

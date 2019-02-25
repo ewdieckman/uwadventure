@@ -27,5 +27,13 @@ namespace UWAdventure.BLL
         {
             return _storeDAO.GetAllStores();
         }
+
+        /// <summary>
+        /// returns view model for single store
+        /// </summary>
+        public StoreViewModel GetStore(int store_id)
+        {
+            return _storeDAO.GetStore(store_id);
+        }
     }
 }
