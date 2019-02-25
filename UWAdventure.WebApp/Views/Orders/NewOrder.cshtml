@@ -1,0 +1,35 @@
+﻿@model UWAdventure.WebApp.Models.NewOrderModel
+@{
+    ViewBag.Title = "Create New Order";
+}
+
+<h2>Create New Order</h2>
+
+@using (Html.BeginForm("CreateOrder", "Orders", FormMethod.Post))
+{
+<div class="form-horizontal">
+
+    <!--START of Store form field -->
+    <div class="form-group">
+        <label for="ddStore" class="col-sm-2 control-label">Store:</label>
+        <div class="col-sm-10">
+            <select id="ddStore" class="form-control" name="Store">
+                <option value="">~ Select store ~</option>
+                <option value="1">Store 1</option>
+            </select>
+        </div>
+    </div>
+    <!--END of Store form field -->
+    <!--START of Sales Associate form field -->
+    <div class="form-group">
+        <label for="ddAssociate" class="col-sm-2 control-label">Sales Associate:</label>
+        <div class="col-sm-10">
+            <select id="ddAssociate" class="form-control" name="SalesAssociate">
+                <option value="">~ Select associate ~</option>
+            </select>
+        </div>
+    </div>
+    <!--END of Sales Associate form field -->
+</div>
+}
+
