@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UWAdventure.BLL;
+using UWAdventure.Entities.DTO;
 using UWAdventure.WebApp.Models;
 
 namespace UWAdventure.WebApp.Controllers
@@ -42,7 +43,26 @@ namespace UWAdventure.WebApp.Controllers
 
         public ActionResult CreateOrder(UWAdventure.WebApp.Models.NewOrderModel formdata)
         {
-            throw new NotImplementedException();
+            NewOrderDTO dto = new NewOrderDTO();
+
+            dto.customer_id = formdata.Customer;
+            dto.store_id = formdata.SelectedStore;
+            dto.order_date = DateTime.Now;
+            dto.staff_id = formdata.SalesAssociate;
+
+            NewOrderItemDTO item = new NewOrderItemDTO();
+            item.product_id = formdata.Product;
+            item.quantity = formdata.Quantity;
+
+            dto.items.Add(item);
+
+            NewOrderCreator order_creator = new NewOrderCreator();
+            order_creator.CreateOrder(dto);
+
+
+            return RedirectToAction("AfterOrder", "Orders");
+
+
         }
     }
 }
