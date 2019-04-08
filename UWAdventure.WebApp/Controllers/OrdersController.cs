@@ -41,6 +41,11 @@ namespace UWAdventure.WebApp.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Action for actually creating a new order
+        /// </summary>
+        /// <remarks>Is executed from the NewOrder view</remarks>
+        [HttpPost]
         public ActionResult CreateOrder(UWAdventure.WebApp.Models.NewOrderModel formdata)
         {
             NewOrderDTO dto = new NewOrderDTO();
@@ -59,10 +64,7 @@ namespace UWAdventure.WebApp.Controllers
             NewOrderCreator order_creator = new NewOrderCreator();
             order_creator.CreateOrder(dto);
 
-
-            return RedirectToAction("AfterOrder", "Orders");
-
-
         }
+
     }
 }

@@ -181,6 +181,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Bootstrap\MobileTabletDesktop.cshtml" />
     <Content Include="Views\Orders\NewOrder.cshtml" />
+    <Content Include="Views\Orders\AfterOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
