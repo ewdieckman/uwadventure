@@ -64,7 +64,10 @@ namespace UWAdventure.WebApp.Controllers
             NewOrderCreator order_creator = new NewOrderCreator();
             order_creator.CreateOrder(dto);
 
+            return RedirectToAction("AfterOrder");
+
         }
+
 
     }
 }
