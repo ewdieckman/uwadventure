@@ -133,6 +133,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\NewOrderModel.cs" />
+    <Compile Include="Models\RecentOrdersModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +183,8 @@
     <Content Include="Views\Bootstrap\MobileTabletDesktop.cshtml" />
     <Content Include="Views\Orders\NewOrder.cshtml" />
     <Content Include="Views\Orders\AfterOrder.cshtml" />
+    <Content Include="Views\Orders\RecentOrders.cshtml" />
+    <Content Include="Views\Orders\StaffOrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
