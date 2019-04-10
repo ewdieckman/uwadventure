@@ -5,10 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using UWAdventure.BLL;
 using UWAdventure.Entities.DTO;
+using UWAdventure.Entities.ViewModels;
 using UWAdventure.WebApp.Models;
 
 namespace UWAdventure.WebApp.Controllers
 {
+    [RoutePrefix("orders")]
     public class OrdersController : Controller
     {
         // GET: Orders
@@ -62,12 +64,47 @@ namespace UWAdventure.WebApp.Controllers
             dto.items.Add(item);
 
             NewOrderCreator order_creator = new NewOrderCreator();
-            order_creator.CreateOrder(dto);
+            var order_number = order_creator.CreateOrder(dto);
 
-            return RedirectToAction("AfterOrder");
+            return RedirectToAction("AfterOrder", new { o = order_number });
 
         }
 
+        public ActionResult AfterOrder(int o)
+        {
+            OrderDetailViewer order_viewer = new OrderDetailViewer();
+            OrderViewModel order = order_viewer.GetOrderDetails(o);
 
+            return View(order);
+        }
+
+        [Route("staff/recent/{days:int}")]
+        public ActionResult RecentOrders(int days)
+        {
+            // calculate the date range
+            DateTime end_date = DateTime.Now;
+            DateTime start_date = end_date.AddDays(-1 * days);
+
+            OrderDetailViewer order_viewer = new OrderDetailViewer();
+            IList<OrderViewModel> orders = order_viewer.GetOrderDetails(start_date, end_date);
+
+            var model = new RecentOrdersModel();
+            model.Orders = orders;
+            model.Days = days;
+            model.StartDate = start_date;
+            model.EndDate = end_date;
+
+            return View(model);
+
+        }
+
+        [Route("staff/{order_number:int}")]
+        public ActionResult StaffOrderDetail(int order_number)
+        {
+            OrderDetailViewer order_viewer = new OrderDetailViewer();
+            OrderViewModel order = order_viewer.GetOrderDetails(order_number);
+
+            return View(order);
+        }
     }
 }
